@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>登入界面</title>
+		<link rel="stylesheet" type="text/css" href="css/login.css">
+		<link rel="stylesheet" type="text/css" href="css/log-reg-style.css">
+		<link rel="stylesheet" href="resource/css/layui.css" />
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="resource/layui.js"></script>
+	</head>
+
+	<body>
+
+		<div id="wrapper" class="login-page">
+			<div id="login_form" class="form" style="background: rgba(0,0,0,0.2);">
+				<form class="register-form layui-form">
+					<h2>用户注册</h2>
+					<br />
+					<input type="text" placeholder="用户名" name="u_name" lay-verify="required|cname" class="layui-input" />
+					<input type="text" placeholder="账号" name="username" lay-verify="required|ccount" class="layui-input" />
+					<input type="password" placeholder="密码" name="password" lay-verify="required|cpass" class="layui-input" />
+					<input type="radio" name="sex" value="男" title="男" checked="">
+					<input type="radio" name="sex" value="女" title="女">
+					<button id="create" lay-submit lay-filter="create">创建账户</button>
+					<p class="message">已经有了一个账户?
+						<a href="#">立刻登录</a>
+					</p>
+				</form>
+				<form method="post" class="layui-form">
+					<h2>管理登录</h2>
+
+					<br />
+					<input name="username" placeholder="用户名" type="text" lay-verify="required|account" class="layui-input" value="admin1">
+
+					<input name="password" lay-verify="required|password" placeholder="密码" type="password" class="layui-input" value="admin1">
+					<button id="login" lay-submit lay-filter="login"> 登入</button>
+					<p class="message">还没有账户?
+						<a href="#">立刻创建</a>
+					</p>
+				</form>
+			</div>
+		</div>
+
+		<script src="js/jquery.min2.js"></script>
+		<script type="text/javascript">
+			layui.use(['form', 'layedit', 'laydate'], function() {
+				var form = layui.form,
+
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+
+				form.verify({
+					username: [
+						/^[\S]{6,10}$/, '账号必须6到10位，且不能出现空格'
+					],
+					password: [
+						/^[\S]{6,20}$/, '密码必须6到20位，且不能出现空格'
+					],
+					cname: [
+						/^[\S]{4,7}$/, '姓名必须在4到7位'
+					],
+					ccount: [
+						/^[\S]{6,10}$/, '账号必须6到10位，且不能出现空格'
+					],
+					// cpass: [
+					// 	/^[\S]{6,20}$/, '密码必须6到20位，且不能出现空格'
+					// ]
+				});
+			});
+
+			$(function() {
+
+				$(function() {
+
+					layui.use('form', function() {
+						var form = layui.form;
+						form.on('submit(login)', function(data) {
+							if(data.field.username==='admin1'&&data.field.password==='admin1'){
+								layer.msg('登入成功', function() {
+									window.location='login.html';
+								});
+							}
+							
+							return false;
+							// 							$.ajax({
+							// 								url: "",
+							// 								type: "",
+							// 								data: {
+							// 									
+							// 								},
+							// 								success: function(data) {
+							// 									//正确拿到token  例如下方
+							// 									window.location="login.html";
+							// 								},
+							// 								error: function() {
+							// 									//错误
+							// 									layer.msg(JSON.stringify(data.field), function() {
+							// 										window.location = "index.html"
+							// 									});
+							// 									return false;
+							// 								},
+							// 								dataType: "text"
+							// 
+							// 							});
+
+						});
+						//注册请求接口
+						form.on('submit(create)', function(data) {
+							layer.msg(JSON.stringify(data.field), function() {
+
+							});
+							return false;
+						});
+					});
+				});
+			
+				$('.message a').click(function() {
+					$('form').animate({
+						height: 'toggle',
+						opacity: 'toggle'
+					}, 'slow');
+					//每次点击这个按钮,清空input框------------------我记不到咋个写了
+					
+				});
+			})
+		</script>
+		<script type="text/javascript" src="js/supersized.3.2.7.min.js"></script>
+		<script type="text/javascript" src="js/supersized-init.js">
+		</script>
+	</body>
+
+</html>
